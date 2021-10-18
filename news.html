@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #sidebar{
+           width: 300px;
+          /* margin-top: 100px; */
+            background-color: antiquewhite;
+        }
+        #news{
+            width: 1200px;
+            height: 1200px;
+        
+            
+        }
+        #box{
+            display: flex;
+        }
+        #desc_div{
+            width: 30%;
+            font-size: 30px;
+           
+            padding:20px ;
+            font-weight: 900;
+        }
+        #content_div{
+            width: 30%;
+            
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 300;
+            padding:20px ;
+            padding-top: 40px;
+            color: rgb(199, 199, 190);
+        }
+        #img_div{
+           
+            width: 30%;
+            padding-top: 40px;
+        }
+      #sidebar>p{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 25px;
+        color: rgb(138, 138, 135);
+      }
+      #logo{
+          width: 80px;
+          margin-top: 30px;
+      }
+      #search{
+          background-color: blue;
+          width: 160px;
+      }
+      #desc{
+          width:600px;
+          
+          font-size: 45px;
+          font-weight: 900;
+          font-family: Arial, Helvetica, sans-serif;
+          padding: 60px;
+      }
+      #content{
+          width: 600px;
+         
+          font-family: Arial, Helvetica, sans-serif;
+          padding: 60px;
+      }
+    </style>
+</head>
+<body>
+    <div id="box">
+    <div id="sidebar">
+        <img src="https://techcrunch.com/wp-content/themes/techcrunch-2017/images/opengraph-default.png" id="logo">
+        <p>Login</p>
+        <div style="height: 4px;"></div>
+        
+        <p id="search">SEARCH</p>
+        <p>Disrupt</p>
+        <p>Start-Ups</p>
+        <p>Videoes</p>
+        <p>Audio</p>
+        <p>NewsLetter</p>
+        <p>EC-1</p>
+        <p>Events</p>
+        <p>More</p>
+    </div>
+    <div id="news"></div>
+
+</div>
+</body>
+</html>
+<script>
+   function show(){
+     var data=JSON.parse( localStorage.getItem("newsbox"))
+    var newsbox=document.getElementById("news");
+    var desc_box=document.createElement("div");
+    desc_box.setAttribute("id","desc");
+    desc_box.innerHTML=data[0].description;
+    var date=document.createElement("p");
+    date.style.marginLeft="60px"
+    date.innerHTML=data[0].publishedAt;
+    var imgbox=document.createElement("img");
+    imgbox.src=data[0].urlToImage;
+    imgbox.style.width="700px";
+    imgbox.style.padding="40px";
+    var contentbox=document.createElement("div");
+    contentbox.innerHTML=data[0].content
+    newsbox.append(desc_box,date,imgbox,contentbox)
+   contentbox.setAttribute("id","content");
+   }
+   show()
+</script>

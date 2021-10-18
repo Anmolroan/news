@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #sidebar{
+           width: 240px;
+          /* margin-top: 100px; */
+        
+        }
+        #news{
+            width: 1200px;
+            height: 1200px;
+            
+        }
+        #box{
+            display: flex;
+        }
+        #desc_div{
+            width: 30%;
+            font-size: 30px;
+           
+            padding:20px ;
+            font-weight: 900;
+        }
+        #content_div{
+            width: 30%;
+            
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 300;
+            padding:20px ;
+            padding-top: 40px;
+            color: rgb(199, 199, 190);
+        }
+        #img_div{
+           
+            width: 30%;
+            padding-top: 40px;
+        }
+      #sidebar>p{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 25px;
+        color: rgb(138, 138, 135);
+      }
+      #logo{
+          width: 80px;
+          margin-top: 30px;
+      }
+      #search{
+          background-color: blue;
+          width: 160px;
+      }
+      #append{
+         width: 300px;
+         height: 30px;
+         
+      }
+    button{
+          height: 30px;
+      }
+      #append>input{
+          width:90%;
+          height:30px
+      }
+    </style>
+</head>
+<body>
+    <div id="box">
+    <div id="sidebar">
+        <img src="https://techcrunch.com/wp-content/themes/techcrunch-2017/images/opengraph-default.png" id="logo">
+        <p>Login</p>
+        <div style="height: 4px;"></div>
+        
+        <p id="search">SEARCH</p>
+        <div></div>
+        <p>Disrupt</p>
+        <p>Start-Ups</p>
+        <p>Videoes</p>
+        <p>Audio</p>
+        <p>NewsLetter</p>
+        <p>EC-1</p>
+        <p>Events</p>
+        <p>More</p>
+    </div>
+    <div id="news">
+        <input id="append">
+        <button id="ser">search</button>
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+    // 24e2c5380324401b8cf2f78c35c21d18
+    var newsbox=document.getElementById("news")
+    async  function home(){
+      let res=  await fetch("http://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=24e2c5380324401b8cf2f78c35c21d18")
+      let data= await res.json();
+      
+      var news=data.articles;
+      console.log(news);
+      
+      news.forEach(el => {
+          var maindiv=document.createElement("div");
+          maindiv.style.width="900px";
+          maindiv.style.display="flex";
+          
+          maindiv.style.marginTop="5px"
+        //   maindiv.style.backgroundColor="red";
+          desc_div=document.createElement("div");
+          desc_div.setAttribute("id","desc_div")
+          var date_div=document.createElement("p");
+          date_div.textContent=el.publishedAt;
+          date_div.style.fontSize="15px"
+        desc_div.innerHTML=el.description;
+        desc_div.append(date_div)
+        content_div=document.createElement("div");
+        content_div.setAttribute("id","content_div");
+        content_div.innerHTML=el.content;
+        var img_div=document.createElement("div")
+        img_div.setAttribute("id","img_div");
+        var img=document.createElement("img")
+        img.src=el.urlToImage;
+        img.style.width="100%"
+        img_div.append(img)
+        
+        maindiv.append(desc_div,content_div,img_div)
+        maindiv.onclick=()=>{
+           if(localStorage.getItem("newsbox")==null){
+               localStorage.setItem("newsbox",JSON.stringify([]))
+           }
+           var newsbox=JSON.parse( localStorage.getItem("newsbox"));
+           newsbox[0]=el;
+         
+           localStorage.setItem("newsbox",JSON.stringify(newsbox))
+           window.location.href="news.html"
+        }
+
+
+          newsbox.append(maindiv)
+      });
+    }
+    home()
+    var search=document.getElementById("search");
+    search.onclick=()=>{
+        var input=document.createElement("input")
+        var appendbox=document.getElementById("append")
+        appendbox.append(input)
+    }
+  
+           var button=document.getElementById("ser")
+           button.onclick=()=>{
+            var myinput=document.getElementById("append").value
+            if(localStorage.getItem("newsbox")==null){
+               localStorage.setItem("newsbox",JSON.stringify([]))
+           }
+           var newsbox=JSON.parse( localStorage.getItem("newsbox"));
+           newsbox[1]=myinput;
+         
+           localStorage.setItem("newsbox",JSON.stringify(newsbox))
+           window.location.href="search.html"
+           }
+</script>
